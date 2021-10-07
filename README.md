@@ -13,9 +13,9 @@ Please cite this paper if you make use of this code.
 ```
 
 This repository contains three folders each containing the code for the three Dynamic Algorithm Configurations scenarios considered in the paper:
-* ```sgd```: Learning Rate Control in Neural Network Training
 * ```cmaes```: Step Size Adaptation in CMA-ES
 * ```fd```: Heuristic Selection in FastDownward
+* ```sgd```: Learning Rate Control in Neural Network Training
 
 
 Please ```cd``` into the specific folder and see the respective ```README.md```'s for instructions on how to use this code.
