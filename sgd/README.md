@@ -1,5 +1,7 @@
 ## Learning Rate Control in Neural Network Training
 
+Meta-learning learning rate control policies as in [(Daniel et al, 2016)](https://www.microsoft.com/en-us/research/publication/learning-step-size-controllers-for-robust-neural-network-training/), but using Sequential Model-based Algorithm Configuration [(SMAC3)](https://arxiv.org/abs/2109.09831) instead of Relative Entropy Policy Search (REPS).
+
 #### Installation instructions:
 (_using conda, python 3.8.5_)
 
