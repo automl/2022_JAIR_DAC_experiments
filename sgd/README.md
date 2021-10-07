@@ -21,7 +21,7 @@ Install (remaining) project requirements:
 pip install -r requirements.txt
 ```
 
-####Meta-training:
+#### Meta-training:
 To meta-train a learning rate controller for RMSprop using the setup in the paper:
 ```
 python run_meta_training.py dac/setups/rmsprop.json <seed>
@@ -34,5 +34,5 @@ to meta-train a learning rate controller for Momentum.
 
 Replace ```<seed>``` by an integer (used by SMAC to seed its random number generator)
 
-####Testing meta-learned learning rate control policies:
+#### Meta-testing learning rate control policies:
 (_under construction_)
