@@ -1,2 +1,38 @@
-# Learning Rate Control in Neural Network Training
+## Learning Rate Control in Neural Network Training
 
+#### Installation instructions:
+(_using conda, python 3.8.5_)
+
+Create and activate conda environment:
+```
+conda create --name dac_sgd python=3.8.5
+conda activate dac_sgd
+```
+Install DACBench
+```
+git clone https://github.com/automl/DACBench.git
+cd DACBench
+git submodule update --init --recursive
+pip install -e .[example]
+```
+
+Install (remaining) project requirements:
+```
+pip install -r requirements.txt
+```
+
+####Meta-training:
+To meta-train a learning rate controller for RMSprop using the setup in the paper:
+```
+python run_meta_training.py dac/setups/rmsprop.json <seed>
+```
+and 
+```
+python run_meta_training.py dac/setups/momentum.json <seed>
+```
+to meta-train a learning rate controller for Momentum.
+
+Replace ```<seed>``` by an integer (used by SMAC to seed its random number generator)
+
+####Testing meta-learned learning rate control policies:
+(_under construction_)

@@ -155,3 +155,7 @@ dmypy.json
 .idea/mongoSettings.xml
 
 .idea/
+
+# Data folders
+data/
+sgd/results
