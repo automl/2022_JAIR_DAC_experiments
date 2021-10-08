@@ -1,8 +1,6 @@
 # 2021_JAIR_DAC_experiments
 
-This repository contains the code for reproducing the experiments described in 
-
-Please cite this paper if you make use of this code.
+The code for reproducing the experiments described in 
 ```
 @article{adriaensen-jair21,
   title={Automated Dynamic Algorithm Configuration},
@@ -11,6 +9,8 @@ Please cite this paper if you make use of this code.
   year={2021},
 }
 ```
+Please cite this paper if you make use of this code.
+
 
 This repository contains three folders each containing the code for the three Dynamic Algorithm Configurations scenarios considered in the paper:
 * ```cmaes```: Step Size Adaptation in CMA-ES
