@@ -10,7 +10,7 @@ sns.set()
 from matplotlib import rcParams
 
 rcParams["font.size"] = "40"
-rcParams['text.usetex'] = True
+rcParams['text.usetex'] = False
 rcParams['font.family'] = 'serif'
 rcParams['figure.figsize'] = (16.0, 9.0)
 rcParams['figure.frameon'] = True
@@ -45,9 +45,9 @@ def dir_path(path):
 
 parser = argparse.ArgumentParser(description='Script to plot LTO test data.')
 parser.add_argument('--lto_path', type=dir_path, help="Path to the LTO data file.",
-                    default=os.path.join("..","examples","DAC_Journal","GallaghersGa21hi_LTO.json"))
+                    default=os.path.join("..","examples","DAC_Journal","GallaghersGaussian21hi_LTO.json"))
 parser.add_argument('--csa_path', type=dir_path, help="Path to the CSA data file.",
-                    default=os.path.join("..","data","PPSN_LTO_Data","PPSN_LTO_Data","CSA_Data","CSA_Plots_10D","GallaghersGaussian21hi.json"))
+                    default=os.path.join("..","data","CSA_10D","GallaghersGaussian21hi.json"))
 parser.add_argument('--function', type=str, help="Function being plotted",
                     default="GallaghersGaussian21hi")
 
