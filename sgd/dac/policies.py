@@ -18,7 +18,7 @@ class SGDStaticPolicy(DACPolicy):
         return 1
 
     def current_configuration(self):
-        return self.lr
+        return np.array([self.lr])
 
     def reconfigure(self, configuration):
         self.lr = configuration[0]
@@ -57,3 +57,44 @@ class SGDLogLinearPolicy(DACPolicy):
 
     def __str__(self):
         return "SGDLogLinearPolicy({})".format(self.current_configuration())
+
+
+class RMSpropPolicy(SGDLogLinearPolicy):
+    """
+    Special case of log-linear policy (Daniel et al, 2016) used for training Momentum
+    """
+
+    def __init__(self):
+        features = ["predictiveChangeVarDiscountedAverage",
+                    "lossVarDiscountedAverage",
+                    "predictiveChangeVarUncertainty",
+                    "lossVarUncertainty"]
+        super().__init__(features, action_range=[1e-14, 1e14])
+
+    def __str__(self):
+        return "RMSpropPolicy({})".format(self.current_configuration())
+
+
+class MomentumPolicy(SGDLogLinearPolicy):
+    """
+    Special case of log-linear policy (Daniel et al, 2016) used for training Momentum
+    """
+
+    def __init__(self):
+        features = ["predictiveChangeVarDiscountedAverage",
+                    "lossVarDiscountedAverage",
+                    "predictiveChangeVarUncertainty",
+                    "lossVarUncertainty"]
+        super().__init__(features, action_range=[1e-14, 1e14])
+
+    def number_of_parameters(self):
+        return 3
+
+    def current_configuration(self):
+        return self.ll_model_params[[0, 2, 4]]
+
+    def reconfigure(self, c):
+        self.ll_model_params = np.asarray([c[0], -c[0], c[1], c[1], c[2]])
+
+    def __str__(self):
+        return "MomentumPolicy({})".format(self.current_configuration())
