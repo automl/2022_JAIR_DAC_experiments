@@ -1,6 +1,6 @@
 ## Learning Step-Size Adaptation in CMA-ES
 
-Learning step-size adaptation policies as in [(Shala et al, 2016)](https://www.microsoft.com/en-us/research/publication/learning-step-size-controllers-for-robust-neural-network-training/), but using Sequential Model-based Algorithm Configuration [(SMAC3)](https://arxiv.org/abs/2109.09831) instead of Relative Entropy Policy Search (REPS).
+Learning step-size adaptation policies as in [(Shala et al, 2020)](https://ml.informatik.uni-freiburg.de/wp-content/uploads/papers/20-PPSN-LTO-CMA.pdf).
 
 #### Installation instructions:
 
