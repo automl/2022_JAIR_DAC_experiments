@@ -32,7 +32,7 @@ In order to implement our approach, we have made modifications to the GPS code p
   |  |-agent
   |  |  |-lto
   |  |  |  |-agent_cmaes.py (under Apache 2.0 license)
-  |  |  |  |-cmaes_world.py (under Apache 2.0 license)
+  |  |  |  |-dacbench_world.py (under Apache 2.0 license)
   |  |-sample
   |  |  |-sample.py
   |  |-utility

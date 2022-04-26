@@ -3,7 +3,7 @@ import numpy as np
 from gps.agent.agent import Agent
 from gps.proto.gps_pb2 import ACTION
 from gps.sample.sample import Sample
-from gps.agent.lto.cmaes_world import CMAESWorld
+from gps.agent.lto.dacbench_world import DACBenchWorld
 
 class AgentCMAES(Agent):
     
@@ -33,7 +33,7 @@ class AgentCMAES(Agent):
         benchmark = None
         if 'benchmark' in self.fcns[0]:
             benchmark = self.fcns[0]['benchmark']
-        self._worlds = [CMAESWorld(self.fcns[i]['dim'], self.fcns[i]['init_loc'], self.fcns[i]['init_sigma'], self.popsize, self.history_len, fcn=fcn[i], hpolib=hpolib, benchmark=benchmark) for i in range(self.conds)]
+        self._worlds = [DACBenchWorld(self.fcns[i]['instance_set_path'], self.fcns[i]['instance_id'], self.fcns[i]['seed']) for i in range(self.conds)]
         self.x0 = []
         
         for i in range(self.conds):

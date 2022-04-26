@@ -1,0 +1,13 @@
+ID,dim,fcn_name,fcn_index,init_sigma,init_loc0,init_loc1,init_loc2,init_loc3,init_loc4,init_loc5,init_loc6,init_loc7,init_loc8,init_loc9
+0,10,AttractiveSector,6,0.5,0,0,0,0,0,0,0,0,0,0
+1,10,BuecheRastrigin,4,0.5,0,0,0,0,0,0,0,0,0,0
+2,10,CompositeGR,19,0.5,0,0,0,0,0,0,0,0,0,0
+3,10,DifferentPowers,14,0.5,0,0,0,0,0,0,0,0,0,0
+4,10,LinearSlope,5,0.5,0,0,0,0,0,0,0,0,0,0
+5,10,SharpRidge,13,0.5,0,0,0,0,0,0,0,0,0,0
+6,10,StepEllipsoidal,7,0.5,0,0,0,0,0,0,0,0,0,0
+7,10,RosenbrockRotated,9,0.5,0,0,0,0,0,0,0,0,0,0
+8,10,SchaffersIllConditioned,18,0.5,0,0,0,0,0,0,0,0,0,0
+9,10,LunacekBiR,24,0.5,0,0,0,0,0,0,0,0,0,0
+10,10,GG101me,21,0.5,0,0,0,0,0,0,0,0,0,0
+11,10,GG21hi,22,0.5,0,0,0,0,0,0,0,0,0,0

@@ -5,7 +5,7 @@ import scipy as sp
 from gps.algorithm.policy.config import INIT_LG
 from gps.algorithm.policy.csa_policy import CSAPolicy
 from gps.algorithm.policy.lin_gauss_policy import LinearGaussianPolicy
-from gps.agent.lto.cmaes_world import CMAESWorld
+from gps.agent.lto.dacbench_world import DACBenchWorld
 
 def init_cmaes_controller(hyperparams, agent):
 
@@ -29,7 +29,7 @@ def init_cmaes_controller(hyperparams, agent):
     if 'benchmark' in fcn:
         benchmark = fcn['benchmark']
     # Create new world to avoiding changing the state of the original world
-    world = CMAESWorld(dim=fcn['dim'], init_loc=fcn['init_loc'], init_sigma=fcn['init_sigma'], init_popsize=popsize, history_len=history_len, fcn=fcn_obj, hpolib=hpolib, benchmark=benchmark)
+    world = DACBenchWorld(seed=fcn['seed'], instance_set_path=fcn['instance_set_path'], instance_id=fcn['instance_id'])
 
     if config['verbose']:
         print("Finding Initial Linear Gaussian Controller")
