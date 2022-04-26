@@ -159,3 +159,6 @@ dmypy.json
 # Data folders
 data/
 sgd/results
+results
+*.npy
+*.cache

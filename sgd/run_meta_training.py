@@ -9,11 +9,11 @@ import sgd.exp_util as exp_util
 
 from ConfigSpace.configuration_space import ConfigurationSpace
 from ConfigSpace.hyperparameters import UniformFloatHyperparameter
-from smac.facade.smac_hpo_facade import SMAC4HPO
+from smac.facade.smac_hpo_facade import SMAC4AC
 from smac.scenario.scenario import Scenario
 from smac.initial_design.random_configuration_design import RandomConfigurations
 
-from sgd.cfg_util import vectorize_config, symlog_vector
+from sgd.cfg_util import vectorize_config, scale_vector
 
 # GLOBAL variables (...) to be passed to target runner
 GLOBAL = None
@@ -21,19 +21,25 @@ GLOBAL = None
 
 class Globals:
 
-    def __init__(self, env, policy, symlog_scale, result_cache):
+    def __init__(self, env, policy, param_scale, result_cache):
         self.env = env
         self.policy = policy
-        self.symlog_scale = symlog_scale
+        self.param_scale = param_scale
         self.result_cache = result_cache
+        self.n_evals_to_n_steps = [0]
 
 
 # Target algorithm runner
 def evaluate_cost(cfg, seed, instance, **kwargs):
     global GLOBAL
+
+    # measure cost in steps
+    cutoff = GLOBAL.env.conditions[int(instance)][3]
+    GLOBAL.n_evals_to_n_steps.append(GLOBAL.n_evals_to_n_steps[-1] + cutoff)
+
     # Pre-processing on config
     cfg = vectorize_config(cfg)
-    cfg = symlog_vector(cfg, GLOBAL.symlog_scale)
+    cfg = scale_vector(cfg, GLOBAL.param_scale)
 
     # Check result cache
     result_cache = GLOBAL.result_cache
@@ -54,12 +60,14 @@ def evaluate_cost(cfg, seed, instance, **kwargs):
 
     total_cost = 0
     done = False
-    while not done:
+    steps = 0
+    while not done and not obs.get("crashed", 0):
         action = policy.act(obs)
         obs, reward, done, _ = env.step(action)
         total_cost += -reward
+        steps += 1
 
-    total_cost = total_cost / cutoff if total_cost < 0 else 0
+    total_cost = total_cost / cutoff if (total_cost < 0 and not obs.get("crashed", 0)) else 0.0
 
     # print('trial: {} (condition: {})'.format(total_reward, condition))
     print('[{}] {}: {}'.format(condition, policy.current_configuration(), total_cost))
@@ -85,13 +93,13 @@ def main(setup):
     # set up Globals (required by target runner)
     env = setup['train_env']
     policy = env.policy_space()
-    symlog_scale = setup['symlog_scale']
+    param_scale = setup['param_scale']
     cfg = policy.current_configuration()
     result_cache = None
     if setup.get("cache_evaluations", False):
         result_cache_path = os.path.join(setup['result_dir'], '{}.cache'.format(sqt_id))
         result_cache = exp_util.ResultCache(result_cache_path)
-    GLOBAL = Globals(env, policy, symlog_scale, result_cache)
+    GLOBAL = Globals(env, policy, param_scale, result_cache)
 
     # set up SMAC
 
@@ -99,9 +107,10 @@ def main(setup):
     cs = ConfigurationSpace()
     # weights = [UniformFloatHyperparameter("w{}".format(i), -10, 10) for i in range(5)]
     params = []
+    x_min, x_max = param_scale.domain()
     for i in range(len(cfg)):
         params.append(
-            UniformFloatHyperparameter("p_{}".format(i), -symlog_scale["vx_max"], symlog_scale["vx_max"]))
+            UniformFloatHyperparameter("p_{}".format(i), x_min, x_max))
     cs.add_hyperparameters(params)
 
     # Build Scenario
@@ -117,7 +126,7 @@ def main(setup):
     scenario_dict["abort_on_first_run_crash"] = False
     scenario = Scenario(scenario_dict)
 
-    smac = SMAC4HPO(scenario=scenario, rng=setup["seed"], tae_runner=evaluate_cost, initial_design=RandomConfigurations)
+    smac = SMAC4AC(scenario=scenario, rng=setup["seed"], tae_runner=evaluate_cost, initial_design=RandomConfigurations)
 
     # run smac (training)
     print('--- TRAINING ---')
@@ -126,23 +135,28 @@ def main(setup):
     # validate incumbents & store SQT
     print('--- VALIDATION ---')
     val_env = setup['val_env']
-    val_fitness = setup['val_fitness']
+    GLOBAL.env = val_env
+    GLOBAL.policy = val_env.policy_space()
     tracer = exp_util.SQTRecorder(time_label='episodes_trained', verbose=True)
     traj_json = os.path.join(smac_output_dir, 'run_{}'.format(setup["seed"]), 'traj.json')
     with open(traj_json) as file:
         for i, line in enumerate(file):
             entry = json.loads(line)
-            inc_i = vectorize_config(entry['incumbent'])
+            n_evals = entry['evaluations']
+            if n_evals <= 0:
+                continue
+            n_steps = GLOBAL.n_evals_to_n_steps[n_evals]
             # store policy
+            inc_i = vectorize_config(entry['incumbent'])
             checkpoint_file = os.path.join(setup['result_dir'], sqt_id, '{}.npy'.format(i))
             os.makedirs(os.path.dirname(checkpoint_file), exist_ok=True)
             np.save(checkpoint_file, inc_i)
             # evaluate the policy
+            costs = np.empty((len(val_env.conditions),))
             for j, cond_j in enumerate(val_env.conditions):
-                result = -evaluate_cost(entry['incumbent'], 0, str(j))
-                val_fitness.tell(i, inc_i, j, cond_j, result)
-            f_val = val_fitness.ask(i, list(range(len(val_env.conditions))))
-            tracer.log(entry['evaluations'], wc_time=entry["wallclock_time"], f_val=f_val, cfg_id=i)
+                costs[j] = evaluate_cost(entry['incumbent'], 0, str(j))
+            f_val = np.mean(costs)
+            tracer.log(n_evals, steps_trained=n_steps, f_val=f_val, inc_id=i)
     sqt = tracer.produce()
     exp_util.store_result(setup['result_dir'], setup, meta_info, sqt, overwrite=True)
 

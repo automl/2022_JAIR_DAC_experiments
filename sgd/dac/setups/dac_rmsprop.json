@@ -25,11 +25,8 @@
         }
       },
       "policy_space": {
-        "obj_class": "SGDLogLinearPolicy",
-        "module": "sgd.dac.policies",
-        "kwargs": {
-          "features": ["predictiveChangeVarDiscountedAverage", "lossVarDiscountedAverage", "predictiveChangeVarUncertainty", "lossVarUncertainty"]
-        }
+        "obj_class": "RMSpropPolicy",
+        "module": "sgd.dac.policies"
       }
     }
   },
@@ -41,32 +38,41 @@
         "obj_class": "SGDBenchmark",
         "module": "dacbench.benchmarks",
         "kwargs": {
-          "instance_set_path": "../instance_sets/sgd/sgd_val_100instances.csv",
+          "instance_set_path": "../instance_sets/sgd/sgd_train_100instances.csv",
           "optimizer": "rmsprop",
           "cd_paper_reconstruction": true,
           "cd_bias_correction": true,
           "training_batch_size": 64,
           "train_validation_ratio": 1.0,
-          "features": ["predictiveChangeVarDiscountedAverage", "lossVarDiscountedAverage", "predictiveChangeVarUncertainty", "lossVarUncertainty"]
+          "features": [
+            "predictiveChangeVarDiscountedAverage",
+            "predictiveChangeVarUncertainty",
+            "lossVarDiscountedAverage",
+            "lossVarUncertainty",
+            "currentLR",
+            "trainingLoss",
+            "step"
+        ]
         }
       },
       "policy_space": {
-        "obj_class": "SGDLogLinearPolicy",
-        "module": "sgd.dac.policies",
-        "kwargs": {
-          "features": ["predictiveChangeVarDiscountedAverage", "predictiveChangeVarUncertainty", "lossVarDiscountedAverage", "lossVarUncertainty"]
-        }
+        "obj_class": "RMSpropPolicy",
+        "module": "sgd.dac.policies"
       }
     }
   },
   "deterministic": true,
-  "symlog_scale": {
-    "vx_min": 0.01,
-    "vx_max": 1.0,
-    "vy_min": 0.000001,
-    "vy_max": 10.0
+  "param_scale": {
+    "obj_class": "SymLogScale",
+    "module": "sgd.cfg_util",
+    "kwargs": {
+      "vx_min": 0.01,
+      "vx_max": 1.0,
+      "vy_min": 0.000001,
+      "vy_max": 10.0
+    }
   },
-  "result_dir": "results/rmsprop",
+  "result_dir": "results/dac_rmsprop3",
   "cache_evaluations": true,
   "overwrite": true,
   "trials_train_limit": 5000,
