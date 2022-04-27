@@ -16,6 +16,7 @@ git clone https://github.com/automl/DACBench.git
 cd DACBench
 git submodule update --init --recursive
 pip install -e .[example]
+cd ..
 ```
 
 Install (remaining) project requirements:
