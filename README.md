@@ -17,5 +17,4 @@ This repository contains three folders, each containing the code for the three c
 * ```fd```: Heuristic Selection in FastDownward
 * ```sgd```: Learning Rate Control in Neural Network Training
 
-
-Please ```cd``` into the specific folder and see the respective ```README.md```'s for instructions on how to use this code.
+To get started, clone the repository (```git clone git@github.com:automl/2021_JAIR_DAC_experiments.git```) and ```cd``` into the specific folder and see the respective ```README.md```'s for instructions on how to use this code.
