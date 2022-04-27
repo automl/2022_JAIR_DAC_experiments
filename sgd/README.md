@@ -27,11 +27,11 @@ pip install -r requirements.txt
 #### Meta-training:
 To meta-train a learning rate controller for RMSprop using the setup in the paper:
 ```
-python run_meta_training.py dac/setups/rmsprop.json <seed>
+python run_meta_training.py dac/setups/dac_rmsprop.json <seed>
 ```
 and 
 ```
-python run_meta_training.py dac/setups/momentum.json <seed>
+python run_meta_training.py dac/setups/dac_momentum.json <seed>
 ```
 to meta-train a learning rate controller for Momentum.
 
