@@ -72,7 +72,7 @@
       "vy_max": 10.0
     }
   },
-  "result_dir": "results/dac_rmsprop3",
+  "result_dir": "results/dac_rmsprop4",
   "cache_evaluations": true,
   "overwrite": true,
   "trials_train_limit": 5000,
