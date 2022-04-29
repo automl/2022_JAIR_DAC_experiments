@@ -6,7 +6,7 @@ Learning step-size adaptation policies as in [(Shala et al, 2020)](https://ml.in
 
 Create and activate conda environment:
 ```
-conda create --name dac_sgd python=3.6
+conda create --name dac_cma python=3.6
 conda activate dac_cma
 ```
 Install DACBench
@@ -30,10 +30,10 @@ python plot_performance.py --lto_path examples/DAC_Journal/GallaghersGaussian21h
 ```
 ### Training
 ```
-python gps_train.py DAC_Journal
+python source/gps/gps_train.py DAC_Journal
 ```
 - The output of training is the pickled version of the learned policy, saved in the path *DAC_Journal/data_files*.
 ### Testing
 ```
-python gps_test.py DAC_Journal
+python source/gps/gps_test.py DAC_Journal
 ```

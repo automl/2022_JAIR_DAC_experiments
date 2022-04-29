@@ -1,4 +1,2 @@
-numpy==1.19.2
-pandas==1.2.0
 configspace==0.4.19
 smac==0.12.4

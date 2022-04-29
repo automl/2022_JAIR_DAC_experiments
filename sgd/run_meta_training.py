@@ -27,6 +27,7 @@ class Globals:
         self.param_scale = param_scale
         self.result_cache = result_cache
         self.n_evals_to_n_steps = [0]
+        self.initial_costs = {}
 
 
 # Target algorithm runner
@@ -58,16 +59,23 @@ def evaluate_cost(cfg, seed, instance, **kwargs):
     obs = env.conditioned_reset(condition)
     cutoff = condition[3]
 
+    GLOBAL.initial_costs[instance] = GLOBAL.initial_costs.get(instance, env.env.get_full_training_loss())
+    initial_loss = GLOBAL.initial_costs[instance]
+
     total_cost = 0
     done = False
     steps = 0
     while not done and not obs.get("crashed", 0):
         action = policy.act(obs)
         obs, reward, done, _ = env.step(action)
-        total_cost += -reward
+        # total_cost += -reward
         steps += 1
 
-    total_cost = total_cost / cutoff if (total_cost < 0 and not obs.get("crashed", 0)) else 0.0
+    # total_cost = total_cost / cutoff if (total_cost < 0 and not obs.get("crashed", 0)) else 0.0
+
+    if not obs.get("crashed", 0):
+        final_loss = env.env.get_full_training_loss()
+        total_cost = min((np.log(final_loss) - np.log(initial_loss)) / cutoff, 0)
 
     # print('trial: {} (condition: {})'.format(total_reward, condition))
     print('[{}] {}: {}'.format(condition, policy.current_configuration(), total_cost))
