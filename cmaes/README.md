@@ -6,7 +6,7 @@ Learning step-size adaptation policies as in [(Shala et al, 2020)](https://ml.in
 
 Create and activate conda environment:
 ```
-conda create --name dac_sgd python=3.6
+conda create --name dac_cma python=3.6
 conda activate dac_cma
 ```
 Install DACBench
