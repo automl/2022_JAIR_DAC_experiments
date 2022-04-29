@@ -30,10 +30,10 @@ python plot_performance.py --lto_path examples/DAC_Journal/GallaghersGaussian21h
 ```
 ### Training
 ```
-python gps_train.py DAC_Journal
+python source/gps/gps_train.py DAC_Journal
 ```
 - The output of training is the pickled version of the learned policy, saved in the path *DAC_Journal/data_files*.
 ### Testing
 ```
-python gps_test.py DAC_Journal
+python source/gps/gps_test.py DAC_Journal
 ```
