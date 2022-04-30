@@ -73,7 +73,7 @@ class Display(object):
 
         return ps, past_sigma, past_obj_val_deltas, past_loc_deltas
 
-    def _update_iteration_data(self, algorithm, test_idx, test_fcns, pol_sample_lists, traj_sample_lists):
+    def _update_iteration_data(self, algorithm, test_idx, test_fcns, pol_sample_lists, traj_sample_lists, iteration=None):
         """
         Update iteration data information: iteration, average cost, and for
         each condition the mean cost over samples, step size, linear Guassian
@@ -87,7 +87,7 @@ class Display(object):
             #itr_data = '%s%d' % ('Sample_', i)
             #self.append_output_text(itr_data)
             pol_avg_cost, pol_std, traj_avg_cost, traj_std, pol_avg_sigma, pol_sigma_std, traj_avg_sigma, traj_sigma_std, end_values = self.get_data(pol_sample_lists[m], traj_sample_lists[m], idx)
-            self.plot_data(pol_sample_lists[m][0], traj_sample_lists[m][0], test_fcn, pol_avg_cost, traj_avg_cost, pol_avg_sigma, traj_avg_sigma, pol_std, traj_std, pol_sigma_std, traj_sigma_std, end_values)
+            self.plot_data(pol_sample_lists[m][0], traj_sample_lists[m][0], test_fcn, pol_avg_cost, traj_avg_cost, pol_avg_sigma, traj_avg_sigma, pol_std, traj_std, pol_sigma_std, traj_sigma_std, end_values, iteration=iteration)
 
         return pol_avg_cost
 
@@ -107,7 +107,7 @@ class Display(object):
             end_values.append(p_obj_val[-1])
         return np.mean(pol_avg_obj, axis=0), np.std(pol_avg_obj, axis=0), np.mean(traj_avg_obj, axis=0), np.std(traj_avg_obj, axis=0), np.mean(pol_avg_sigma, axis=0), np.std(pol_avg_sigma, axis=0), np.mean(traj_avg_sigma, axis=0), np.std(traj_avg_sigma, axis=0), end_values
 
-    def plot_data(self, pol_sample, traj_sample, cur_cond, pol_costs, traj_costs, pol_sigma, traj_sigma, pol_std, traj_std, pol_sigma_std, traj_sigma_std, end_values):
+    def plot_data(self, pol_sample, traj_sample, cur_cond, pol_costs, traj_costs, pol_sigma, traj_sigma, pol_std, traj_std, pol_sigma_std, traj_sigma_std, end_values, iteration=None):
         log_text = {}
         log_text['Average costs LTO'] = list(pol_costs)
         log_text['Average costs controller'] = list(traj_costs)
@@ -118,19 +118,24 @@ class Display(object):
         log_text['Std costs controller'] = list(traj_std)
         log_text['Std Sigma LTO'] = list(pol_sigma_std)
         log_text['Std Sigma controller'] = list(traj_sigma_std)
-        self.append_output_text(log_text, cur_cond)
+        self.append_output_text(log_text, cur_cond, iteration=iteration)
 
 
-    def update(self, algorithm, agent, test_fcns, cond_idx_list, pol_sample_lists, traj_sample_lists):
+    def update(self, algorithm, agent, test_fcns, cond_idx_list, pol_sample_lists, traj_sample_lists, iteration=None):
 
         if self._first_update:
             #self._output_column_titles(algorithm)
             self._first_update = False
         #costs = [np.mean(np.sum(algorithm.prev[m].cs, axis=1)) for m in range(algorithm.M)]
-        pol_costs = self._update_iteration_data(algorithm, test_fcns, cond_idx_list, pol_sample_lists, traj_sample_lists)
+        pol_costs = self._update_iteration_data(algorithm, test_fcns, cond_idx_list, pol_sample_lists, traj_sample_lists, iteration=iteration)
 
         return pol_costs
 
-    def append_output_text(self, text, cur_cond):
-        with open('%s_%s.txt' % (self._log_filename, cur_cond), 'a') as f:
-            json.dump(text, f)
+    def append_output_text(self, text, cur_cond, iteration=None):
+        
+        if iteration is not None:
+            with open('itr%s_%s_%s.txt' % (iteration, self._log_filename, cur_cond), 'a') as f:
+                json.dump(text, f)
+        else:
+            with open('%s_%s.txt' % (self._log_filename, cur_cond), 'a') as f:
+                json.dump(text, f)

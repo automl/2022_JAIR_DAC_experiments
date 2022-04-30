@@ -37,14 +37,14 @@ train_fcns = range(num_fcns)
 test_fcns = range(num_fcns)
 seed = 0
 if not test:
-    instance_set_path = "instance_set_train.csv"
+    instance_set_path = "../../../examples/DAC_Journal/instance_set_train.csv"
     fcn_names = ["BentCigar", "Ellipsoidal", "Discus", "Katsuura", "Rastrigin", "Rosenbrock", "Schaffers", "Schwefel",
                  "Sphere", "Weierstrass"]
 else:
     num_fcns = 12
     train_fcns = range(num_fcns)
     test_fcns = range(num_fcns)
-    instance_set_path = "instance_set_test.csv"
+    instance_set_path = "../../../examples/DAC_Journal/instance_set_test.csv"
     fcn_names = ["AttractiveSector", "BuecheRastrigin", "CompositeGR", "DifferentPowers", "LinearSlope", "SharpRidge",
                  "StepEllipsoidal", "RosenbrockRotated", "SchaffersIllConditioned", "LunacekBiR", "GG101me", "GG21hi"]
 fcns = []
