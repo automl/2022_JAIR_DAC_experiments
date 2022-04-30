@@ -37,12 +37,14 @@ to meta-train a learning rate controller for Momentum.
 
 Replace ```<seed>``` by an integer (used by SMAC to seed its random number generator)
 
+**Training data:** The data from the 10 meta-training runs discussed in the paper can be found in ```results```
+
 #### Meta-testing learning rate control policies:
 To test a learned learning rate controller:
 ```
 python run_meta_test.py --optimizer <optimizer> --dataset <dataset> --policy <policy>
 ```
-Replace ```<optimizer>``` by ```"rmsprop"``` or ```"momentum"```, ```<dataset>``` by ```"mnist"``` or ```"cifar"```, and ```<policy>``` to a path containing a configuration stored by the meta-training process (.npy file). For convenience, the final policies obtained by the 10 meta-training runs discussed in the paper are provided in ```dac/learned_policies```.
+Replace ```<optimizer>``` by ```"rmsprop"``` or ```"momentum"```, ```<dataset>``` by ```"mnist"``` or ```"cifar"```, and ```<policy>``` to a path containing a configuration stored by the meta-training process (.npy file). For convenience, the final policies obtained by the 10 meta-training runs discussed in the paper are provided in ```results/learned_policies```.
 
 To run one of the constant learning rate baselines:
 ```
