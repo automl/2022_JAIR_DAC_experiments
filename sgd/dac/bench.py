@@ -1,7 +1,7 @@
 import json
 import os
 
-from sgd.dac.abstract import DACEnv
+from dac.abstract import DACEnv
 import numpy as np
 
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from sgd.dac.abstract import DACPolicy
+from dac.abstract import DACPolicy
 
 
 class SGDStaticPolicy(DACPolicy):

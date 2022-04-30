@@ -5,7 +5,7 @@ import socket
 import json
 import hashlib
 import numpy as np
-import sgd.exp_util as exp_util
+import exp_util as exp_util
 
 from ConfigSpace.configuration_space import ConfigurationSpace
 from ConfigSpace.hyperparameters import UniformFloatHyperparameter
@@ -13,7 +13,7 @@ from smac.facade.smac_hpo_facade import SMAC4AC
 from smac.scenario.scenario import Scenario
 from smac.initial_design.random_configuration_design import RandomConfigurations
 
-from sgd.cfg_util import vectorize_config, scale_vector
+from cfg_util import vectorize_config, scale_vector
 
 # GLOBAL variables (...) to be passed to target runner
 GLOBAL = None

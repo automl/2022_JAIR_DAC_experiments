@@ -1,7 +1,7 @@
 {
   "train_env": {
     "obj_class": "DACBenchWrapper",
-    "module": "sgd.dac.bench",
+    "module": "dac.bench",
     "kwargs": {
       "benchmark": {
         "obj_class": "SGDBenchmark",
@@ -26,13 +26,13 @@
       },
       "policy_space": {
         "obj_class": "RMSpropPolicy",
-        "module": "sgd.dac.policies"
+        "module": "dac.policies"
       }
     }
   },
   "val_env": {
     "obj_class": "DACBenchWrapper",
-    "module": "sgd.dac.bench",
+    "module": "dac.bench",
     "kwargs": {
       "benchmark": {
         "obj_class": "SGDBenchmark",
@@ -57,14 +57,14 @@
       },
       "policy_space": {
         "obj_class": "RMSpropPolicy",
-        "module": "sgd.dac.policies"
+        "module": "dac.policies"
       }
     }
   },
   "deterministic": true,
   "param_scale": {
     "obj_class": "SymLogScale",
-    "module": "sgd.cfg_util",
+    "module": "cfg_util",
     "kwargs": {
       "vx_min": 0.01,
       "vx_max": 1.0,
@@ -72,7 +72,7 @@
       "vy_max": 10.0
     }
   },
-  "result_dir": "results/dac_rmsprop4",
+  "result_dir": "results/dac_rmsprop",
   "cache_evaluations": true,
   "overwrite": true,
   "trials_train_limit": 5000,
