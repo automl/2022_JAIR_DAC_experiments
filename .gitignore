@@ -158,7 +158,6 @@ dmypy.json
 
 # Data folders
 data/
-sgd/results
-results
-*.npy
+dac_momentum
+dac_rmsprop
 *.cache

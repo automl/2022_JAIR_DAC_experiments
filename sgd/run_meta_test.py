@@ -83,6 +83,4 @@ if __name__ == '__main__':
             next_log_count = np.ceil(pow(args.eval_frequency, count))
 
     print("{}, {}".format(step_count, env.get_full_training_loss()))
-    count += 1
-    next_log_count = np.ceil(pow(args.eval_frequency, count))
     print("> Meta-test run ended")
