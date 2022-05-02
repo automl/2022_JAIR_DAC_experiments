@@ -134,8 +134,8 @@ class Display(object):
     def append_output_text(self, text, cur_cond, iteration=None):
         
         if iteration is not None:
-            with open('itr%s_%s_%s.txt' % (iteration, self._log_filename, cur_cond), 'a') as f:
+            with open('./%s_itr%s_%s.txt' % (self._log_filename, iteration, cur_cond), 'a+') as f:
                 json.dump(text, f)
         else:
-            with open('%s_%s.txt' % (self._log_filename, cur_cond), 'a') as f:
+            with open('./%s_%s.txt' % (self._log_filename, cur_cond), 'a+') as f:
                 json.dump(text, f)
