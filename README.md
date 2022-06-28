@@ -2,10 +2,10 @@
 
 The code for reproducing the experiments described in 
 ```
-@article{adriaensen-jair22,
+@article{adriaensen-arxiv22,
   title={Automated Dynamic Algorithm Configuration},
   author={Adriaensen, Steven and Biedenkapp, Andr{\'{e}} and Shala, Gresa and Awad, Noor and Eimer, Theresa and Lindauer, Marius and Hutter, Frank},
-  journal={Journal of Artificial Intelligence Research},
+  journal={arXiv:2205.13881 [cs.AI]},
   year={2022},
 }
 ```
