@@ -9,7 +9,7 @@ The code for reproducing the experiments described in
   year={2022},
 }
 ```
-Please cite this paper if you make use of this code.
+Please cite this paper if you make use of this code ([full pdf](https://arxiv.org/pdf/2205.13881)).
 
 
 This repository contains three folders, each containing the code for the three case studies considered in the paper:
